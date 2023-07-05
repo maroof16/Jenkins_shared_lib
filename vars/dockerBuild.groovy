@@ -3,7 +3,7 @@ def call(String project, String ImageTag, String hubUser) {
     
     sh """
     sudo chmod 777 /var/run/docker.sock
-    docker build -t ${imageName} Dockerfile .
+    docker build -t ${imageName} .
     docker image tag ${imageName}:${ImageTag}
     docker image tag ${imageName} ${imageName}:latest
     """
