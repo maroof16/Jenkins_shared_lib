@@ -1,15 +1,9 @@
-//def call( String javaApp, String Dockerfile , String dockerRegistry) {
-    //def imageName = "${hubUser}/${project}"
-def call(String project, String ImageTag, String hubUser){  
+
+def call(String ImageName, String ImageTag, String DockerHubUser){  
     sh """
      sudo chmod 777 /var/run/docker.sock
-     docker build -t ${hubUser}/${project} .
-     docker image tag ${hubUser}/${project} ${hubUser}/${project}:${ImageTag}
-     docker image tag ${hubUser}/${project} ${hubUser}/${project}:latest
+     docker build -t ${DockerHubUser}/${ImageName} .
+     docker image tag ${DockerHubUser}/${ImageName} ${DockerHubUser}/${ImageName}:${ImageTag}
+     docker image tag ${DockerHubUser}/${ImageName} ${DockerHubUser}/${ImageName}:latest
      """
-    // docker.withRegistry(dockerRegistry) {
-    //           def dockerImage = docker.build(javaApp, "-f ${Dockerfile} .")
-    //           //dockerImage.push()
-    //         }
-
 }
