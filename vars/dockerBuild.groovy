@@ -1,4 +1,4 @@
-def call(String project, String ImageTag, String hubUser) {
+def call(String hubUser, String ImageTag, String project) {
     def imageName = "${hubUser}/${project}"
     
     sh """
