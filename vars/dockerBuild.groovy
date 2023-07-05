@@ -1,8 +1,10 @@
-def call(string project, string hubUser) {
+def call(string project, string ImageTag, string hubUser) {
+    def imageName = "${hubUser}/${project}"
+    
     sh  """
      sudo chmod 777 /var/run/docker.sock
-     docker build -t ${hubUser}:${project} .
-     docker image tag ${hubUser}:${project} ${hubUser}/${project}:${ImageTag}
-     docker image tag ${hubUser}:${project} ${hubUser}/${project}:latest
+     docker build -t imageName Dockerfile .
+     docker image tag  imageName:${ImageTag}
+     docker image tag imageName imageName:latest
         """
 }
