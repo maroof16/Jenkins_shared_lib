@@ -1,4 +1,4 @@
 def call() {
-    trivy image tag ${DockerHubUser}/${ImageName} ${DockerHubUser}/${ImageName}:latest > trivyscan.txt
+    trivy image ${DockerHubUser}/${ImageName}:latest > trivyscan.txt
     cat trivyscan.txt
 }
