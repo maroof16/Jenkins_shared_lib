@@ -4,10 +4,10 @@ def call(String ImageName, String ImageTag, String DockerHubUser){
         passwordVariable: 'docker-pass', 
         usernameVariable: 'docker-user'
     )]) {
-        docker-pass = env.docker_pass
-        docker-user = env.docker_user
+        def docker_pass = env.docker-pass
+        def docker_user = env.docker-user
         sh " docker login -u '$docker_user' -p '$docker_pass'"
         }
     sh " docker image push ${DockerHubUser}/${ImageName}:${ImageTag} "
-    sh " docker image ${DockerHubUser}/${ImageName}:latest "
+    sh " docker image push ${DockerHubUser}/${ImageName}:latest "
 }
