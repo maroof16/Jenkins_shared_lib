@@ -9,6 +9,6 @@ def call() {
         echo "Second Line Image ID: \$second_line_image_id"
 
         echo "Deleting Docker images..."
-        docker rmi "\$first_line_image_id" "\$second_line_image_id"
+        docker rmi -f "\$first_line_image_id" "\$second_line_image_id"
     """
 }
