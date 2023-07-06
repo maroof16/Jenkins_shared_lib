@@ -6,6 +6,6 @@ def call(String ImageName, String ImageTag, String DockerHubUser){
      docker image tag ${DockerHubUser}/${ImageName} ${DockerHubUser}/${ImageName}:${ImageTag}
      docker image tag ${DockerHubUser}/${ImageName} ${DockerHubUser}/${ImageName}:latest
      docker rmi ${DockerHubUser}/${ImageName} ${DockerHubUser}/${ImageName}:${ImageTag}
-     docker rmi ${DockerHubUser}/${ImageName} ${DockerHubUser}/${ImageName}:latest
+     //docker rmi ${DockerHubUser}/${ImageName} ${DockerHubUser}/${ImageName}:latest
      """
 }
