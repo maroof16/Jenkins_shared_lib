@@ -1,3 +1,4 @@
+def call(){
 #!/bin/bash
 
 # Run the Docker image details command and store the output
@@ -16,3 +17,4 @@ echo "Second Line Image ID: $second_line_image_id"
 # Delete the Docker images using the extracted IMAGE IDs
 echo "Deleting Docker images..."
 docker rmi "$first_line_image_id" "$second_line_image_id"
+}
