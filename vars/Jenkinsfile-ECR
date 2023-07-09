@@ -1,0 +1,86 @@
+@Library('Jenkins-shared-library') _
+pipeline {
+    agent any 
+    parameters{
+        choice(name: 'action', choices: 'create\ndelete', description: 'Choose create/Destroy')
+        string(name: 'aws_account_id',description: 'Name of the aws account id', defaultValue:'637828493305')
+        string(name: 'region',description: 'region of the region', defaultValue:'ap-south-1')
+        string(name: 'ECR_repo_name',description: 'Name of the repo', defaultValue:'maroofshaikh09')
+    }
+    stages{
+        stage('git checkout') {
+            when { expression { params.action == 'create' }}
+            steps{
+                script{
+                    git branch: "main",
+                    url: "https://github.com/maroof16/ci-cd.git"
+                }
+            }
+        }
+        stage('unit mvn test') {
+            when { expression { params.action == 'create' }}
+            steps{
+                script{
+                    mvntest()
+                }
+            }
+        }
+        stage('mvn integration test') {
+            when { expression { params.action == 'create' }}  
+            steps{
+                script{
+                    mvnintegrationtest()
+                }
+            }
+        }
+        stage('Sonar Static Code Analysis') {
+            when { expression { params.action == 'create' }}  
+            steps{
+                script{
+                    //def StaticCodeAnalysisID = 'sonar-token'
+                    StaticCodeAnalysis()
+                }
+            }
+        }
+        stage('Static Code Quality') {
+            when { expression { params.action == 'create' }}  
+            steps{
+                script{
+                    StaticCodeAnalysis()
+                }
+           }
+        }
+        stage('mvn build') {
+            when { expression { params.action == 'create' }}
+            steps{
+                script{
+                    mvnCleanInstall()
+                }
+            }
+        }
+        stage('Docker image build: ECR repo') {
+            when { expression { params.action == 'create' }}
+            steps{
+                script{
+                   dockerImagePush("${params.aws_account_id}","${params.region}","${params.ECR_repo_name}")
+               }
+            }
+        }
+        stage('Docker image Scan: Trivy ') {
+            when { expression { params.action == 'create' }}
+            steps{
+                script{
+                   dockerImagePush("${params.aws_account_id}","${params.region}","${params.ECR_repo_name}")
+               }
+            }
+        }
+        stage('Docker image push: ECR ') {
+            when { expression { params.action == 'create' }}
+            steps{
+                script{
+                   dockerImagePush("${params.aws_account_id}","${params.region}","${params.ECR_repo_name}")
+               }
+            }
+        }
+    }
+}
